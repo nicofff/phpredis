@@ -73,6 +73,9 @@ PHP_INI_BEGIN()
     PHP_INI_ENTRY("redis.clusters.read_timeout", "0", PHP_INI_ALL, NULL)
     PHP_INI_ENTRY("redis.clusters.seeds", "", PHP_INI_ALL, NULL)
     PHP_INI_ENTRY("redis.clusters.timeout", "0", PHP_INI_ALL, NULL)
+    PHP_INI_ENTRY("redis.clusters.auth", "", PHP_INI_ALL, NULL)    
+    PHP_INI_ENTRY("redis.clusters.timeout", "", PHP_INI_ALL, NULL)
+>>>>>>> zhengide/develop
 
     /* redis session */
     PHP_INI_ENTRY("redis.session.locking_enabled", "0", PHP_INI_ALL, NULL)
@@ -955,7 +958,7 @@ redis_connect(INTERNAL_FUNCTION_PARAMETERS, int persistent)
         redis_free_socket(redis->sock);
     }
 
-    redis->sock = redis_sock_create(host, host_len, port, timeout, read_timeout, persistent,
+    redis->sock = redis_sock_create(host, host_len, port, NULL, 0, timeout, read_timeout, persistent, 
         persistent_id, retry_interval, 0);
 
     if (redis_sock_server_open(redis->sock TSRMLS_CC) < 0) {
