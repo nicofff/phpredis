@@ -193,8 +193,7 @@ typedef struct redisCluster {
 #endif
 
     /*RedisCluster auth*/
-    char *auth;
-    int auth_len;
+    zend_string *auth;
 
     /* Timeout and read timeout (for normal operations) */
     double timeout;

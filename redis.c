@@ -75,7 +75,6 @@ PHP_INI_BEGIN()
     PHP_INI_ENTRY("redis.clusters.timeout", "0", PHP_INI_ALL, NULL)
     PHP_INI_ENTRY("redis.clusters.auth", "", PHP_INI_ALL, NULL)    
     PHP_INI_ENTRY("redis.clusters.timeout", "", PHP_INI_ALL, NULL)
->>>>>>> zhengide/develop
 
     /* redis session */
     PHP_INI_ENTRY("redis.session.locking_enabled", "0", PHP_INI_ALL, NULL)

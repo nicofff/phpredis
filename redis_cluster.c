@@ -406,8 +406,7 @@ void redis_cluster_init(redisCluster *c, HashTable *ht_seeds, char *auth, int au
     }
     // Redis Cluster auth
     if (auth && auth_len > 0){
-        c->auth = estrndup(auth, auth_len);
-        c->auth_len = auth_len;
+        c->auth = zend_string_init(auth, auth_len, 0);
     }
 
     /* Set our timeout and read_timeout which we'll pass through to the
@@ -428,7 +427,7 @@ void redis_cluster_init(redisCluster *c, HashTable *ht_seeds, char *auth, int au
     // Create and map our key space
     cluster_map_keyspace(c TSRMLS_CC);
 
-    efree(c->auth);
+    zend_string_release(c->auth);
 }
 
 /* Attempt to load a named cluster configured in php.ini */
@@ -463,7 +462,7 @@ void redis_cluster_load(redisCluster *c, char *name, int name_len TSRMLS_DC) {
     if ((z_value = zend_hash_str_find(Z_ARRVAL(z_auth), name, name_len)) != NULL) {
         if (Z_TYPE_P(z_value) == IS_STRING) {
             auth = Z_STRVAL_P(z_value);
-            auth_len = strlen(auth);
+            auth_len = Z_STRLEN_P(z_value);
         } else {
             zval_dtor(&z_seeds);
             zval_dtor(&z_auth);
